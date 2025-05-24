@@ -1,66 +1,59 @@
-name: CI/CD Release
+name: Release Extension
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        persist-credentials: true
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # kell a tag-ekhez
 
-    - name: Setup Git user
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Install VSCE
-      run: npm install -g @vscode/vsce
+      - name: Install VSCE
+        run: npm install -g @vscode/vsce
 
-    - name: Bump version, generate changelog, commit and tag
-      run: npm run release:ci
+      - name: Run tests
+        run: npm run test
 
-    # - name: Run tests
-    #   run: npm run test
+      - name: Build VSIX package
+        run: npm run build
 
-    - name: Build VSIX package
-      run: npm run build
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: $(git describe --tags --abbrev=0)
-        name: Release $(git describe --tags --abbrev=0)
-        body_path: CHANGELOG.md
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Bump version and generate changelog
+        run: npm run release:ci
 
-    - name: Upload VSIX asset to release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: $(git describe --tags --abbrev=0)
-        files: ./path/to/your-extension.vsix
+      - name: Push changes and tags
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
+          tags: true
 
-    - name: Push changes to repo
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get latest tag
+        id: tag
+        run: echo "version=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Upload GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.version }}
+          name: Release ${{ steps.tag.outputs.version }}
+          body_path: CHANGELOG.md
+          files: psi-header-guardian-${{ steps.tag.outputs.version }}.vsix
