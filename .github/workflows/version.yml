@@ -1,4 +1,4 @@
-name: Push changes and tags
+name: Bump version and generate changelog
 
 on:
   workflow_dispatch:
