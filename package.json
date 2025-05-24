@@ -23,7 +23,7 @@
         "psi-header-checker.sourceFolder": {
           "type": "string",
           "default": "src",
-          "description": "A mappa útvonala, ahol a fájlokat ellenőrizni kell."
+          "description": "The path of the map where the files should be checked."
         },
         "psi-header-checker.blacklistExtensions": {
           "type": "array",
@@ -31,7 +31,7 @@
             "type": "string"
           },
           "default": [],
-          "description": "Tiltott fájl kiterjesztések, amelyeket nem ellenőrzünk."
+          "description": "Prohibited file extensions that we do not check."
         }
       }
     }
