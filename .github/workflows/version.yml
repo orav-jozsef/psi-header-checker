@@ -28,9 +28,6 @@ jobs:
       # - name: Run tests
       #   run: npm run test
 
-      - name: Build VSIX package
-        run: npm run build
-
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"
