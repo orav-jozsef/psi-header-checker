@@ -8,6 +8,4 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.1.1](https://github.com/orav-jozsef/psi-header-checker/compare/v0.1.0...v0.1.1) (2025-05-24)
 
-### [0.1.0] - 2025-05-24
-
-[0.1.0]: https://github.com/orav-jozsef/psi-header-checker/releases/tag/v0.1.0
+### [0.1.0](https://github.com/orav-jozsef/psi-header-checker/releases/tag/v0.1.0) (2025-05-24)
