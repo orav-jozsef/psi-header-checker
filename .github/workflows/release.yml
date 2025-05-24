@@ -1,0 +1,67 @@
+name: CI/CD Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Bump version (patch)
+      id: version
+      run: |
+        # Bump package.json version by patch, create git commit and tag
+        NEW_VERSION=$(npm version patch -m "chore(release): %s [skip ci]")
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Generate changelog description from last commits
+      id: changelog
+      run: |
+        TAG=${{ steps.version.outputs.new_version }}
+        TAG_CLEAN=${TAG//v/}
+        LAST_TAG=$(git describe --tags --abbrev=0 HEAD^)
+        DESCRIPTION=$(git log $LAST_TAG..HEAD --pretty=format:"- %s")
+        echo "changelog_desc<<EOF" >> $GITHUB_OUTPUT
+        echo "$DESCRIPTION" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Run tests
+      run: npm run test
+
+    - name: Build VSIX package
+      run: npm run build
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.new_version }}
+        name: Release ${{ steps.version.outputs.new_version }}
+        body: ${{ steps.changelog.outputs.changelog_desc }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload VSIX asset to release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.new_version }}
+        files: ./path/to/your-extension.vsix
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
