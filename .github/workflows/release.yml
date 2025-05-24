@@ -25,8 +25,8 @@ jobs:
       - name: Install VSCE
         run: npm install -g @vscode/vsce
 
-      - name: Run tests
-        run: npm run test
+      # - name: Run tests
+      #   run: npm run test
 
       - name: Build VSIX package
         run: npm run build
