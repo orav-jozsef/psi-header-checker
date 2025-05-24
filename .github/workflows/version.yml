@@ -1,4 +1,4 @@
-name: Release Extension
+name: Push changes and tags
 
 on:
   workflow_dispatch:
