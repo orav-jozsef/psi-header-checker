@@ -29,7 +29,9 @@ jobs:
       #   run: npm run test
 
       - name: Build VSIX package
-        run: npm run build
+        run: |
+          npm run build
+          mv psi-header-guardian-*.vsix psi-header-guardian-${{ steps.tag.outputs.version }}.vsix
 
       - name: Configure Git user
         run: |
