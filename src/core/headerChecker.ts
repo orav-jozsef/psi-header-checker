@@ -23,7 +23,7 @@ export async function checkAndFixHeaders(
       const uri = vscode.Uri.file(filePath);
       const doc = await vscode.workspace.openTextDocument(uri);
       const editor = await vscode.window.showTextDocument(doc, {
-        preview: false,
+        preview: true,
       });
 
 
@@ -40,7 +40,7 @@ export async function checkAndFixHeaders(
       }
 
       await vscode.commands.executeCommand('psi-header.insertFileHeader');
-      doc.save();
+      await editor.document.save();
       logger.info(`Header inserted for ${filePath}`);
       vscode.window.showInformationMessage(`Header inserted for ${filePath}`);
       results.push({
