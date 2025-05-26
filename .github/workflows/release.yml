@@ -29,10 +29,8 @@ jobs:
       #   run: npm run test
 
       - name: Build VSIX package
-        run: |
-          npm run build
-          mv psi-header-guardian-*.vsix psi-header-guardian-${{ steps.tag.outputs.version }}.vsix
-
+        run: npm run build
+          
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"
@@ -51,6 +49,9 @@ jobs:
       - name: Get latest tag
         id: tag
         run: echo "version=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+
+      - name: Rename VSIX file
+        run: mv psi-header-guardian-*.vsix psi-header-guardian-${{ steps.tag.outputs.version }}.vsix
 
       - name: Upload GitHub release
         uses: softprops/action-gh-release@v1
