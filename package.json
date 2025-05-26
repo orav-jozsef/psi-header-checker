@@ -2,7 +2,7 @@
   "name": "psi-header-guardian",
   "displayName": "Psi Header Guardian",
   "description": "A companion extension for psi-header that recursively checks all files in a specified folder, verifies if the license header is present and correct according to the psi-header configuration, and inserts it automatically if missing. Includes support for ignoring files and file types via a custom blacklist.",
-  "version": "0.1.3",
+  "version": "0.1.8",
   "publisher": "orav-jozsef",
   "engines": {
     "vscode": "^1.100.0"
