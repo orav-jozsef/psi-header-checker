@@ -67,7 +67,7 @@ export async function loadConfigs(): Promise<LoadedConfig> {
       extensionConfig: null,
       psiHeaderConfig: null,
       licenseReference: null
-    }
+    };
   }
   logger.info(`Psi Header Checker configuration loaded: ${JSON.stringify(extensionConfig)}`);
 
@@ -79,7 +79,7 @@ export async function loadConfigs(): Promise<LoadedConfig> {
       extensionConfig: extensionConfig,
       psiHeaderConfig: null,
       licenseReference: null
-    }
+    };
   }
   logger.info(`Psi Header settings loaded: ${JSON.stringify(psiHeaderConfig)}`);
 
@@ -91,7 +91,7 @@ export async function loadConfigs(): Promise<LoadedConfig> {
       extensionConfig: extensionConfig,
       psiHeaderConfig: psiHeaderConfig,
       licenseReference: null
-    }
+    };
   }
   logger.info(`Psi Header license reference loaded: ${JSON.stringify(licenseReference)}`);
 
@@ -99,7 +99,7 @@ export async function loadConfigs(): Promise<LoadedConfig> {
     extensionConfig: extensionConfig,
     psiHeaderConfig: psiHeaderConfig,
     licenseReference: licenseReference
-  }
+  };
 }
 
 function loadExtensionConfig(): ExtensionConfig | null {
@@ -118,7 +118,7 @@ function loadExtensionConfig(): ExtensionConfig | null {
   return {
     sourceFolder: sourceFolder,
     blacklistExtensions: blacklistExtensions
-  }
+  };
 }
 
 function loadPsiHeaderConfig(): PsiHeaderConfig | null {

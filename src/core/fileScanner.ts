@@ -48,7 +48,7 @@ function matchGlobPatterns(filePath: string, patterns: string[]): boolean {
     } else {
       return normalizedFile.includes(normalizedPattern);
     }
-  })
+  });
 }
 
 function getFileExtension(filePath: string): string {
