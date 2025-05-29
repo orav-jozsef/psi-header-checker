@@ -44,10 +44,6 @@ class Logger {
     this.appendMessage('ERROR', message);
   }
 
-  // debug(message: string) {
-  //   this.appendMessage('DEBUG', message);
-  // }
-
   clear() {
     this.outputChannel.clear();
   }

@@ -28,7 +28,6 @@ import { logger } from '../utils/logger';
 import { loadLicenseFile } from '../core/licenseLoader';
 import { loadConfigs } from '../core/configLoader';
 import { scanFiles } from '../core/fileScanner';
-import { config } from 'process';
 import { checkAndFixHeaders } from '../core/headerChecker';
 
 export async function runCheckHeadersCommand() {
@@ -37,8 +36,6 @@ export async function runCheckHeadersCommand() {
     vscode.window.showErrorMessage('No workspace folder is open. Please open a folder to run the header check.');
     return;
   }
-
-  const workspacePath = workspaceFolders[0].uri.fsPath;
 
   await vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
