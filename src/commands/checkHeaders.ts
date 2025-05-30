@@ -29,8 +29,17 @@ import { loadLicenseFile } from '../core/licenseLoader';
 import { loadConfigs } from '../core/configLoader';
 import { scanFiles } from '../core/fileScanner';
 import { checkAndFixHeaders } from '../core/headerChecker';
+import { ensureExtensionActive } from '../core/extensionDependencyChecker';
 
 export async function runCheckHeadersCommand() {
+  const psiExtensionId = 'psioniq.psi-header';
+  const psiExtension = await ensureExtensionActive(psiExtensionId);
+  if (!psiExtension) {
+    logger.error('PSI Extension is not active. Please ensure it is installed and activated.');
+    vscode.window.showErrorMessage('PSI Extension is not active. Please ensure it is installed and activated.');
+    return;
+  }
+
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (!workspaceFolders || workspaceFolders.length === 0) {
     vscode.window.showErrorMessage('No workspace folder is open. Please open a folder to run the header check.');
