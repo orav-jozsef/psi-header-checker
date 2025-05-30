@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/orav-jozsef/psi-header-checker/compare/v0.1.9...v0.1.10) (2025-05-30)
+
+
+### Features
+
+* **extension-check:** add check for psi file header extension status ([64c1110](https://github.com/orav-jozsef/psi-header-checker/commit/64c11104ccf248811e41956d74d682698c95e2a2))
+* only open files if header is missing or invalid ([b9e0c6c](https://github.com/orav-jozsef/psi-header-checker/commit/b9e0c6cdefa8a48fbf5a1a698ce3c33d2a8dcf6e))
+
 ### [0.1.9](https://github.com/orav-jozsef/psi-header-checker/compare/v0.1.8...v0.1.9) (2025-05-26)
 
 ### [0.1.8](https://github.com/orav-jozsef/psi-header-checker/compare/v0.1.7...v0.1.8) (2025-05-26)
